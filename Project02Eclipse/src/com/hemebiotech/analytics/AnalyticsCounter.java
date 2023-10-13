@@ -7,10 +7,9 @@ import java.io.FileWriter;
 
 
 public class AnalyticsCounter {
-    public static int headacheCount = 0;
+
     public static int rashCount = 0;
     public static int pupilCount = 0;
-
 
     public static void main(String args[]) throws Exception {
 
@@ -38,16 +37,10 @@ public class AnalyticsCounter {
                 line = reader.readLine();
             }
 
-
-            FileWriter writer = new FileWriter("result.out");
-            writer.write("headache: " + headacheCount + "\n");
-            writer.write("rash: " + rashCount + "\n");
-            writer.write("dialated pupils: " + pupilCount + "\n");
-            writer.close();
-
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
 
     }
 }
+
