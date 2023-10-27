@@ -1,46 +1,43 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class AnalyticsCounter {
 
-    public static int rashCount = 0;
-    public static int pupilCount = 0;
+    private final ISymptomReader reader;
+    private final ISymptomWriter writer;
 
-    public static void main(String args[]) throws Exception {
+    public AnalyticsCounter(final ISymptomReader reader, final ISymptomWriter writer) {
+        this.reader = reader;
+        this.writer = writer;
+    }
 
-        try {
+    public List<String> getSymptoms() {
+        return reader.getSymptoms();
+    }
 
-            FileReader fileReader = new FileReader("symptoms.txt");
-            BufferedReader reader = new BufferedReader(fileReader);
-            String line = reader.readLine();
+    public Map<String, Integer> countSymptoms(List<String> symptoms) {
 
+        Map<String, Integer> resultCountSymptoms = new HashMap<String, Integer>();
 
-            int i = 0;
-            int headachesCount = 0;
-            while (line != null) {
-                i++;
-                System.out.println("symptom from file: " + line);
-                if (line.equals("headache")) {
-                    headachesCount++;
-                    System.out.println("number of headaches: " + headachesCount);
-                } else if (line.equals("rush")) {
-                    rashCount++;
-                } else if (line.contains("pupils")) {
-                    pupilCount++;
-                }
-
-                line = reader.readLine();
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+        for (String sympt : symptoms) {
+            Integer count = resultCountSymptoms.get(sympt);
+            resultCountSymptoms.put(sympt, count == null ? 1 : count + 1);
         }
+        return resultCountSymptoms;
+    }
 
+    public Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms) {
+        TreeMap<String, Integer> resultSortSymptoms = new TreeMap<>(symptoms);
+
+        return resultSortSymptoms;
+    }
+
+    public void writeSymptoms(Map<String, Integer> symptoms) {
+        writer.writeSymptoms(symptoms);
     }
 }
 
