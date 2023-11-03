@@ -5,6 +5,11 @@ import java.util.Map;
 
 public class Main {
 
+    /**
+     *  This program allows to read a file that contains a list of symptoms
+     *  and write this list with their number of occurrences in an output file
+     *  @author Marion
+     */
     public static void main(String args[]) {
 
         ISymptomReader reader = new ReadSymptomDataFromFile("symptoms.txt");
